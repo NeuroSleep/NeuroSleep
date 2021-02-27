@@ -1,56 +1,86 @@
 package com.neurosleep;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import android.view.Menu;
-import android.view.MenuItem;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity {
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+
+public class MainActivity extends AppCompatActivity{
+    private EditText emailEt, passwordEt;
+    private Button SignUpButton;
+    private Button SignInButton;
+    private TextView SignUpTv;
+    private ProgressDialog progressDialog;
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        firebaseAuth = FirebaseAuth.getInstance();
+        emailEt = findViewById(R.id.email);
+        passwordEt = findViewById(R.id.password);
+        SignInButton = findViewById(R.id.login);
+        progressDialog = new ProgressDialog(this);
+        SignUpTv = findViewById(R.id.signUpTv);
+        SignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onClick(View v) {
+                Login();
+            }
+        });
+        SignUpTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this,SignUpActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+    }
+    private void Login(){
+        String email = emailEt.getText().toString();
+        String password = passwordEt.getText().toString();
+        //User does not input email
+        if (TextUtils.isEmpty(email)) {
+            emailEt.setError("Enter your email");
+            return;
+        }
+        //User does not input password1
+        else if (TextUtils.isEmpty(password)) {
+            passwordEt.setError("Enter your password");
+            return;
+        }
+        progressDialog.setMessage("Please wait...");
+        progressDialog.show();
+        progressDialog.setCanceledOnTouchOutside(false);
+        firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(MainActivity.this,"Successfully registered",Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(MainActivity.this,DashboardActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Toast.makeText(MainActivity.this, "Sign in failed", Toast.LENGTH_LONG).show();
+                }
+                progressDialog.dismiss();
             }
         });
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-}
