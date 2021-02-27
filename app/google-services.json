@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "2392971091",
+    "project_id": "neurosleep-441",
+    "storage_bucket": "neurosleep-441.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:2392971091:android:c68da066017b88868033a6",
+        "android_client_info": {
+          "package_name": "com.NeuroSleep"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "2392971091-tvhnnrpjlqk2u9nou2palko6klrfgj2n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzx_QDMYwKhL_Mg4P8llkoUGjItEb62wg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "2392971091-tvhnnrpjlqk2u9nou2palko6klrfgj2n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
