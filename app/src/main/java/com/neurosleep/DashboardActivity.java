@@ -31,7 +31,7 @@ public class DashboardActivity extends Activity {
 
             }
 
-            @Override 
+            @Override
             public void DataIsUpdated() {
 
             }
