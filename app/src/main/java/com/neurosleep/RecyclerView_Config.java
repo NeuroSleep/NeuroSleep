@@ -26,6 +26,7 @@ public class RecyclerView_Config {
         private TextView mAlpha;
         private TextView mBeta;
         private TextView mGamma;
+        private TextView mSeconds;
 
         private String key;
         public AnalysisItemView(ViewGroup parent){
@@ -36,6 +37,7 @@ public class RecyclerView_Config {
         mAlpha = (TextView) itemView.findViewById(R.id.alpha_textView);
         mBeta = (TextView) itemView.findViewById(R.id.beta_textView);
         mGamma = (TextView) itemView.findViewById(R.id.gamma_textView);
+        mSeconds = (TextView) itemView.findViewById(R.id.seconds_textView);
         }
         public void bind(Analysis analysis, String key){
             mDelta.setText(String.valueOf(analysis.getDelta()));
@@ -43,6 +45,7 @@ public class RecyclerView_Config {
             mAlpha.setText(String.valueOf(analysis.getAlpha()));
             mBeta.setText(String.valueOf(analysis.getBeta()));
             mGamma.setText(String.valueOf(analysis.getGamma()));
+            mSeconds.setText(String.valueOf(analysis.getSeconds()));
             this.key = key;
         }
     }

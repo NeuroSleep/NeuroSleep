@@ -16,7 +16,7 @@ public class FirebaseDatabaseHelper{
     private DatabaseReference mReferenceAnalysis;
     private List<Analysis> analysisList = new ArrayList<>();
 
-    public interface  DataStatus{
+    public interface DataStatus{
         void DataIsLoaded(List<Analysis> analysisList, List<String> keys);
         void DataIsInserted();
         void DataIsUpdated();
