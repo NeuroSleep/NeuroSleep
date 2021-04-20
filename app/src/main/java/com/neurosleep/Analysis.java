@@ -1,63 +1,72 @@
 package com.neurosleep;
 
 public class Analysis {
-    private Long Alpha;
-    private Long Beta;
-    private Long Delta;
-    private Long Gamma;
-    private Long Theta;
+    private String Alpha;
+    private String Beta;
+    private String Delta;
+    private String Gamma;
+    private String Theta;
+    private String Seconds;
 
     public Analysis() {
     }
 
-    public Analysis(Long Alpha, Long Beta, Long Delta, Long Gamma, Long Theta) {
+    public Analysis(String Alpha, String Beta, String Delta, String Gamma, String Theta, String Seconds) {
         this.Alpha = Alpha;
         this.Beta = Beta;
         this.Delta = Delta;
         this.Gamma = Gamma;
         this.Theta = Theta;
+        this.Seconds = Seconds;
     }
 
-    public Long getAlpha() {
+    public String getAlpha() {
         return Alpha;
     }
 
-    public void setAlpha(Long alpha) {
+    public void setAlpha(String alpha) {
         this.Alpha = alpha;
     }
 
-    public Long getBeta() {
+    public String getBeta() {
         return Beta;
     }
 
-    public void setBeta(Long beta) {
+    public void setBeta(String beta) {
         this.Beta = beta;
     }
 
-    public Long getDelta() {
+    public String getDelta() {
         return Delta;
     }
 
-    public void setDelta(Long delta) {
+    public void setDelta(String delta) {
         this.Delta = delta;
     }
 
-    public Long getGamma() {
+    public String getGamma() {
         return Gamma;
     }
 
-    public void setGamma(Long gamma) {
+    public void setGamma(String gamma) {
         this.Gamma = gamma;
     }
 
-    public Long getTheta() {
+    public String getTheta() {
         return Theta;
     }
 
-    public void setTheta(Long theta) {
+    public void setTheta(String theta) {
         this.Theta = theta;
     }
 
+    public String getSeconds() {
+        return Seconds;
+    }
+
+    public void setSeconds(String seconds) {
+        this.Seconds = seconds;
+    }
 
 
 
