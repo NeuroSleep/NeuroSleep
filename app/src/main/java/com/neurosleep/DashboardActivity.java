@@ -20,6 +20,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 public class DashboardActivity extends Activity {
     private Button logout;
     private RecyclerView mRecyclerView;

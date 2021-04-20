@@ -1,4 +1,4 @@
- package com.neurosleep;
+package com.neurosleep;
 
 import android.content.Context;
 import android.view.LayoutInflater;
