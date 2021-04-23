@@ -3,8 +3,14 @@ package com.neurosleep;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,6 +33,8 @@ import java.util.List;
 
 public class DashboardActivity extends Activity {
     private Button logout;
+    private Button coaching;
+    private TextView tips;
     private RecyclerView mRecyclerView;
     LineChart lineChart;
     Analysis analysis;
@@ -43,13 +51,13 @@ public class DashboardActivity extends Activity {
         database = FirebaseDatabase.getInstance();
         lineChart = findViewById(R.id.lineChart);
 
-        reference=database.getReference("Analysis");
+        reference = database.getReference("Analysis");
         lineDataSet.setLineWidth(5);
-        mRecyclerView = (RecyclerView)findViewById(R.id.recyclerview_analysis);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview_analysis);
         new FirebaseDatabaseHelper().readAnalysis(new FirebaseDatabaseHelper.DataStatus() {
             @Override
             public void DataIsLoaded(List<Analysis> analysisList, List<String> keys) {
-                new RecyclerView_Config().setConfig(mRecyclerView,DashboardActivity.this,analysisList,keys);
+                new RecyclerView_Config().setConfig(mRecyclerView, DashboardActivity.this, analysisList, keys);
             }
 
             @Override
@@ -77,9 +85,42 @@ public class DashboardActivity extends Activity {
                 finish();
             }
         });
+
+        coaching = findViewById(R.id.coaching_btn);
+
+        coaching.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // inflate the layout of the popup window
+                LayoutInflater inflater = (LayoutInflater)
+                        getSystemService(LAYOUT_INFLATER_SERVICE);
+                View popupView = inflater.inflate(R.layout.popup_window, null);
+
+                // create the popup window
+                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                boolean focusable = true; // lets taps outside the popup also dismiss it
+                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+
+                // show the popup window
+                // which view you pass in doesn't matter, it is only used for the window tolken
+                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+                //setContentView(R.layout.popup_window);
+                TextView tips = (TextView) popupWindow.getContentView().findViewById(R.id.alphaTips);
+                //TextView tips = (TextView)findViewById(R.id.alphaTips);
+                Mapping coaching = new Mapping();
+                tips.setText(coaching.getAlphaTips());
+                // dismiss the popup window when touched
+                popupView.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        popupWindow.dismiss();
+                        return true;
+                    }
+                });
+            }
+            });
     }
-
-
 
     @Override
     protected void onStart() {
@@ -92,7 +133,7 @@ public class DashboardActivity extends Activity {
                 if (dataSnapshot.hasChildren()) {
                     for (DataSnapshot keyNode : dataSnapshot.getChildren()) {
                         Analysis analysis = keyNode.getValue(Analysis.class);
-                            dataVals.add(new Entry(Float.parseFloat(analysis.getSeconds()),Float.parseFloat(analysis.getGamma())));
+                            dataVals.add(new Entry(Float.parseFloat(analysis.getSeconds()),Float.parseFloat(analysis.getAlpha())));
                             lineChart.animateX(5000);
                     }
                     showChart(dataVals);
@@ -122,3 +163,4 @@ public class DashboardActivity extends Activity {
         lineChart.invalidate();
     }
 }
+

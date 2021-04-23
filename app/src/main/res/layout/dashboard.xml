@@ -40,6 +40,12 @@
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/lineChart"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></com.github.mikephil.charting.charts.LineChart>
+        android:layout_height="407dp"></com.github.mikephil.charting.charts.LineChart>
+
+    <Button
+        android:id="@+id/coaching_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Get Results" />
 
 </LinearLayout>
